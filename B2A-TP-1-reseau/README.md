@@ -165,21 +165,6 @@ Commandes à utiliser (ou pas) : `vim`, `cat`, `nmcli`, `systemctl`, `firewall-c
 
 ### 1. Configuration cartes réseau
 
-**NB** : sur CentOS8, la gestion des cartes réseau a légèrement changé. Il existe un démon qui gère désormais tout ce qui est relatif au réseau : NetworkManager.  
-
-Marche à suivre pour modifier la configuration d'une carte réseau :
-* édition du fichier de configuration
-  * `sudo vim /etc/sysconfig/network-scripts/ifcfg-enp0s8`
-* refresh de NetworkManager ("Hey prend mes modifications en compte stp !")
-  * `sudo nmcli connection reload` 
-  * `sudo nmcli con reload` même chose, on peut abréger les commandes `nmcli`
-  * `sudo nmcli c reload` même chose aussi
-* restart de l'interface
-  * `sudo ifdown enp0s8` puis `sudo ifup enp0s8`
-  * **OU** `sudo nmcli con up enp0s8`
-
-> Pour les hipsters, y'a moyen de ne plus passer du tout par les fichiers dans `/etc/sysconfig` et tout gérer directement avec NetworkManager, cf [la doc officielle](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/configuring_and_managing_networking/index#Selecting-Network-Configuration-methods_overview-of-Network-configuration-methods). 
-
 ---
 
 * 🌞 modifier la configuration de la carte réseau privée
@@ -233,25 +218,15 @@ Marche à suivre pour modifier la configuration d'une carte réseau :
         _gateway                 ether   52:54:00:12:35:02   C                     enp0s3
         192.168.56.103           ether   0a:00:27:00:00:06   C                     enp0s8
     ```
-* 🐙 mettre en place un NIC *teaming* (ou *bonding*)
-  * il vous faut deux cartes dans le même réseau puisque vous allez les agréger (vous pouvez en créer de nouvelles)
-  * le *teaming* ou *bonding* consiste à agréger deux cartes réseau pour augmenter les performances/la bande passante
-  * je vous laisse free sur la configuration (active/passive, loadbalancing, round-robin, autres)
-  * prouver que le NIC *teaming* est en place
-
 ---
 
 ### 2. Serveur SSH
 
 * 🌞 modifier la configuration du système pour que le serveur SSH tourne sur le port 2222
-  * adapter la configuration du firewall (fermer l'ancien port, ouvrir le nouveau)
-* pour l'étape suivante, il faudra un hôte qui ne s'est jamais connecté à la VM afin d'observer les échanges ARP (vous pouvez aussi juste vider la table ARP du client). Je vous conseille de faire une deuxième VM dans le même réseau, mais vous pouvez utiliser votre PC hôte.
-* 🌞 analyser les trames de connexion au serveur SSH
-  * intercepter avec Wireshark et/ou `tcpdump` le trafic entre le client SSH et le serveur SSH
-  * détailler l'établissement de la connexion
-    * doivent figurer au moins : échanges ARP, 3-way handshake TCP
-    * 🐙 configurer une connexion par échange de clés, analyser les échanges réseau réalisés par le protocole SSH au moment de la connexion
-  * une fois la connexion établie, choisir une trame du trafic SSH et détailler son contenu
+  * ```
+    [root@localhost ~]# firewall-cmd --list-ports
+    2222/tcp
+    ```
 
 # III. Routage simple
 
