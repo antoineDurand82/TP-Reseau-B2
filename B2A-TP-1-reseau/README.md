@@ -210,7 +210,7 @@ Mon gns.
     `VM1-1` | `10.1.0.10` | - | -
     `VM2-1` | - | `10.2.0.11` | -
     <br> <br> <br>
-  * ![configuration vm 2](conf_vm2.PNG)
+  * ![configuration vm 2](Conf_vm2.PNG)
     Comme tu peux le voir en surligner jaune, j'ai redéfini l'adresse ip de ma vm, j'ai renomé ma vm, je lui ai ajouté une route jusqu'à l'autre réseaux via ma gateway présent sur mon router (que tu vas voir à la suite) et enfin tu vois aussi que j'ai créé un host pour ping ma vm1
 
     Je vais t'épargner le spam en te montrant la config de la vm1 où il n'y a que les ips qui changent. <br> <br> <br>
