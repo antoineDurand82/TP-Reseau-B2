@@ -249,7 +249,7 @@ Mon gns.
 * ![Trop bien](tro_bien.PNG)
     J'avou c'est stylé, petite interface de gestion de la VM.
     Je me suis un peu baladé, c'est vachement parlant cette interface, c'est juste trop bien
-    Si jamais des gens passent par ici, j'ai suivit ce "tuto" pour m'y connecter `https://www.vultr.com/docs/how-to-install-cockpit-on-centos-7` (c'est la même installation sur centos 7 et 8)
+    Si jamais des gens passent par ici, j'ai suivit ce "[tuto](https://www.vultr.com/docs/how-to-install-cockpit-on-centos-7)" pour m'y connecter (c'est la même installation sur centos 7 et 8)
 
 ---
 
@@ -259,4 +259,4 @@ Netdata est un outil utilisé pour récolter des métriques et envoyer des alert
 
 * ![Trop styleeee](trop_styleeeee.PNG)
 C'est vraiment trop stylé, j'ai vraiment pris mon pied entre tant de facilité d'utilisation avec cockpit et tant de graphique avec netdata, c'est tellement beau et pratique !!!!
-Encore une fois, pour les randoms de passage, le lien de l'installation: `https://computingforgeeks.com/how-to-install-netdata-on-rhel-8-centos-8/`
+Encore une fois, pour les randoms de passage, le [tuto d'installation](https://computingforgeeks.com/how-to-install-netdata-on-rhel-8-centos-8/)
