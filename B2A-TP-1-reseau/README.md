@@ -255,26 +255,31 @@ Mon gns.
 
 # IV. Autres applications et métrologie
 
-Dans cette partie, on va jouer un peu avec de nouvelles commandes qui peuvent être utiles pour diagnostiquer un peu ce qu'il se passe niveau réseau.
-
----
-
 ## 1. Commandes
 
-* jouer avec `iftop`
-  * expliquer son utilisation et imaginer un cas où `iftop` peut être utile
+* N'ayant pas pu installer iftop sur ma vm je vais simplement faire un résumé de ce que j'ai pu comprendre via mon ami google
+    * iftop nous permets de listé chacunes des connexions actuels sur la machine via une interface avec des barres de chargement (youhou). C'est completment le graphique du débit utilisé que l'on peut avoir dans la catégorie performance du gestionnaire des tâches sous windows mais avec un détail de chacune des utilisations de se débit. 
 
 ---
 
 ## 2. Cockpit
 
 * 🌞 mettre en place cockpit sur la VM1
-  * c'est quoi ? C'est un service web. Pour quoi faire ? Vous allez vite comprendre en le voyant.
-  * `sudo dnf install -y cockpit`
-  * `sudo systemctl start cockpit`
-  * trouver (à l'aide d'une commande shell) sur quel port (TCP ou UDP) écoute Cockpit 
-  * vérifier que le port est ouvert dans le firewall
-* 🌞 explorer Cockpit, plus spécifiquement ce qui est en rapport avec le réseau
+    ```
+    [root@vm1 ~]# ss -lput
+    Netid          State            Recv-Q            Send-Q                               Local Address:Port                         Peer Address:Port
+    udp            UNCONN           0                 0                             192.168.243.4%enp0s8:bootpc                            0.0.0.0:*               users:(("NetworkManager",pid=799,fd=22))
+    udp            UNCONN           0                 0                                        127.0.0.1:323                               0.0.0.0:*               users:(("chronyd",pid=763,fd=6))
+    udp            UNCONN           0                 0                                            [::1]:323                                  [::]:*               users:(("chronyd",pid=763,fd=7))
+    tcp            LISTEN           0                 128                                        0.0.0.0:ssh                               0.0.0.0:*               users:(("sshd",pid=816,fd=6))
+    tcp            LISTEN           0                 128                                           [::]:ssh                                  [::]:*               users:(("sshd",pid=816,fd=8))
+    tcp            LISTEN           0                 128                                              *:websm                                   *:*               users:(("cockpit-ws",pid=31481,fd=3),("systemd",pid=1,fd=61))
+    ```
+    Et bah j'aurais bien voulu te dire les ports utilisé par cockpit (dernière ligne) mais il veut pas me le dire, je suis tristesse. EN lisant le man je vois qu'il est censé être sur le port 9090.
+* ![Trop bien](tro_bien.PNG)
+    J'avou c'est stylé, petite interface de gestion de la VM.
+    Je me suis un peu baladé, c'est vachement parlant cette interface, c'est juste trop bien
+    Si jamais des gens passent par ici, j'ai suivit ce "tuto" pour m'y connecter `https://www.vultr.com/docs/how-to-install-cockpit-on-centos-7` (c'est la même installation sur centos 7 et 8)
 
 ---
 
@@ -282,7 +287,6 @@ Dans cette partie, on va jouer un peu avec de nouvelles commandes qui peuvent ê
 
 Netdata est un outil utilisé pour récolter des métriques et envoyer des alertes. Il peut aussi être utilisé afin de visionner ces métriques, à court terme. Nous allons ici l'utiliser pour observer les métriques réseau et mettre en place un service web supplémentaire.
 
-* 🌞 mettre en place Netdata sur la VM1 et la VM2
-  * se référer à la documentation officielle
-  * repérer et ouvrir le port dédié à l'interface web de Netdata
-* 🌞 explorer les métriques liées au réseau que récolte Netdata
+* ![Trop styleeee](trop_styleeeee.PNG)
+C'est vraiment trop stylé, j'ai vraiment prid mon pied entre tant de facilité d'utilisation avec cockpit et tant de graphique avec netdata, c'est tellement beau et pratique !!!!
+Encore une fois, pour les randoms de passage, le lien de l'installation: `https://computingforgeeks.com/how-to-install-netdata-on-rhel-8-centos-8/`
