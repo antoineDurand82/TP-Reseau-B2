@@ -2,8 +2,6 @@
 
 # Sommaire
 
-* [Intro](#intro)
-* [0. Etapes préliminaires](#0-etapes-préliminaires)
 * [I. Simplest setup](#i-simplest-setup)
   * [Topologie](#topologie)
   * [Plan d'adressage](#plan-dadressage)
@@ -27,38 +25,6 @@
   * [Plan d'adressage](#plan-dadressage-4)
   * [ToDo](#todo-4)
 
-# Intro
-
-Dans ce TP on va se pencher un peu plus sur les échanges réseau en eux-mêmes, en **analysant les trames réseau avec Wireshark**. 
-
-On va aussi jouer de façon un peu plus avancée avec des **switches**.
-
-On va commencer à rentrer plus dans le détails des différents éléments.  
-**Allez à votre rythme, prenez le temps de comprendre.**  
-**Posez des questions.**  
-**Prenez des notes au fur et à mesure.**  
-**Lisez les parties en entier avant de commencer à travailler dessus.**
-
-Pour ce qui est de la mise en place, on va manipuler des switches (IOS Cisco) et aborder les notions/protocoles suivants : 
-* ARP
-* `ping`
-* Spanning-Tree : STP
-* Utilisation de VLAN : Trunking
-* Agrégation de ports : LACP 
-
-> **Référez-vous [au README des TPs](/tp/README.md) pour des infos sur le déroulement et le rendu des TPs.**
-
-# 0. Etapes préliminaires
-
-* avoir lu [le README des TPs](/tp/README.md)
-* [**GNS3** installé et configuré](/memo/setup-gns3.md) (avec la **GNS3VM**, dans la même version)
-* **Wireshark** installé
-* Lecture du [mémo/setup GNS3](/memo/setup-gns3.md)
-* Lecture du [mémo CLI Cisco](/memo/cli-cisco.md) section [Général](/memo/cli-cisco.md#general) et [Switches](/memo/cli-cisco.md#switches)
-
-**Dans ce TP, vous pouvez considérez que :**
-* les `PC` sont [**des VPCS de GNS3**](/memo/setup-gns3.md#utilisation-dun-vpcs) (sauf indication contraire)
-* les `SW` sont des Switches Cisco, virtualisé avec l'IOU L2
 
 # I. Simplest setup
 
@@ -69,6 +35,7 @@ Pour ce qui est de la mise en place, on va manipuler des switches (IOS Cisco) et
 | PC1 +--------+  SW1  +--------+ PC2 |
 +-----+        +-------+        +-----+
 ```
+![salut](simplest_setup.PNG)
 
 #### Plan d'adressage
 
@@ -78,22 +45,21 @@ Machine | `net1`
 `PC2` | `10.2.1.2/24`
 
 #### ToDo
+* Premier ping de la vm1 à la 2
+  * ![ping pc1 vers pc 2](pc1verspc2.PNG)
+    ligne 71 à 73 demande ARP pour connaitre à qui appartient l'ip demandé lors du ping 
+    ligne 74 à 85 protocole ICMP ping l'adresse ip demandé.
+<br><br><br>
 
-> **Si vous lancez Wireshark, et que vous mettez des dumps/captures d'écran, précisez où vous avez lancé Wireshark (sur quel lien réseau/quelle machine et quelle interface)**
-
-* 🌞 mettre en place la topologie ci-dessus
-* 🌞 faire communiquer les deux PCs
-  * avec un `ping` qui fonctionne
-    * déterminer le protocole utilisé par `ping` à l'aide de Wireshark
-  * analyser les échanges ARP
-    * utiliser Wireshark et mettre en évidence l'échange ARP entre les deux machines (`ARP Request` et `ARP Reply`)
-    * corréler avec les tables ARP des différentes machines
-* 🌞 récapituler toutes les étapes (dans le compte-rendu, à l'écrit) quand `PC1` exécute `ping PC2` pour la première fois
-  * échanges ARP
-  * échange `ping`
+* Premier ping de la vm2 à la 1
+  * ![ping pc2 vers pc 1](pc2verspc1.PNG)
+    ligne 15 à 17 demande ARP pour connaitre à qui appartient l'ip demandé lors du ping 
+    ligne 18 à 30 protocole ICMP ping l'adresse ip demandé.
 * 🌞 expliquer...
   * pourquoi le switch n'a pas besoin d'IP
+    * Un switch n'a pas besoin d'IP car une demande ARP fonctionne avec la MAC, au moment de faire la demande ARP, elle passe par l'adresse mac de broadcast qui est celle du switch, et ce dernier renvoi vers chacunes des machines qui lui sont connecté.
   * pourquoi les machines ont besoin d'une IP pour pouvoir se `ping`
+    * Les machines ont besoin d'une adresse IP pour pouvoir se `ping` car le protocole ICMP est encapsulé dans un paquet IP qui demande l'IP du destinataire. 
 
 # II. More switches
 
