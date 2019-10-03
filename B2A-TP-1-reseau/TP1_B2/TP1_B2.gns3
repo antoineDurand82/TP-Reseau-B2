@@ -2,14 +2,14 @@
     "auto_close": true,
     "auto_open": false,
     "auto_start": false,
-    "grid_size": 0,
+    "grid_size": 75,
     "name": "TP1_B2",
     "project_id": "f8b25716-521a-4210-899d-3389b564d727",
     "revision": 8,
     "scene_height": 1000,
     "scene_width": 2000,
     "show_grid": false,
-    "show_interface_labels": false,
+    "show_interface_labels": true,
     "show_layers": false,
     "snap_to_grid": false,
     "supplier": null,
@@ -19,7 +19,7 @@
             {
                 "drawing_id": "cd2d692e-2204-4e4d-a072-24f6317a2945",
                 "rotation": 0,
-                "svg": "<svg height=\"40\" width=\"92\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"TypeWriter\" font-size=\"10.0\" font-weight=\"bold\">Area 1\n192.168.56.0</text></svg>",
+                "svg": "<svg height=\"40\" width=\"60\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"TypeWriter\" font-size=\"10.0\" font-weight=\"bold\">Area 1\n10.1.0.0</text></svg>",
                 "x": -347,
                 "y": -180,
                 "z": 1
@@ -27,7 +27,7 @@
             {
                 "drawing_id": "99cb9622-a0c6-4220-a1c2-3e4e69652629",
                 "rotation": 0,
-                "svg": "<svg height=\"40\" width=\"92\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"TypeWriter\" font-size=\"10.0\" font-weight=\"bold\">Area 2\n192.168.57.0</text></svg>",
+                "svg": "<svg height=\"40\" width=\"60\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"TypeWriter\" font-size=\"10.0\" font-weight=\"bold\">Area 2\n10.2.0.0</text></svg>",
                 "x": 35,
                 "y": -169,
                 "z": 1
@@ -52,7 +52,7 @@
         "links": [
             {
                 "filters": {},
-                "link_id": "2b6fb830-a9d4-425a-9225-3e1d819e3e8c",
+                "link_id": "ee711f06-ee8d-482d-b0a4-c9f694494aa1",
                 "nodes": [
                     {
                         "adapter_number": 0,
@@ -61,7 +61,7 @@
                             "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
                             "text": "e0",
                             "x": 72,
-                            "y": 27
+                            "y": 29
                         },
                         "node_id": "d85af2d0-36cd-48d3-ab8c-5c9bdca88173",
                         "port_number": 0
@@ -72,8 +72,8 @@
                             "rotation": 0,
                             "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
                             "text": "e0/0",
-                            "x": -6,
-                            "y": 23
+                            "x": -40,
+                            "y": 34
                         },
                         "node_id": "62edb7c9-d920-45a4-a39a-5e4f8f6769c1",
                         "port_number": 0
@@ -83,51 +83,8 @@
             },
             {
                 "filters": {},
-                "link_id": "c6e4841d-dacb-4d7b-85a2-cd183c0d8369",
+                "link_id": "c9de9459-1ede-457a-bb70-34558a135821",
                 "nodes": [
-                    {
-                        "adapter_number": 0,
-                        "label": {
-                            "rotation": 0,
-                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                            "text": "e0/2",
-                            "x": 36,
-                            "y": -17
-                        },
-                        "node_id": "62edb7c9-d920-45a4-a39a-5e4f8f6769c1",
-                        "port_number": 2
-                    },
-                    {
-                        "adapter_number": 0,
-                        "label": {
-                            "rotation": 0,
-                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                            "text": "nat0",
-                            "x": 76,
-                            "y": 74
-                        },
-                        "node_id": "eb41e085-fbb3-4889-9e8a-b17aab05e2f4",
-                        "port_number": 0
-                    }
-                ],
-                "suspend": false
-            },
-            {
-                "filters": {},
-                "link_id": "ce167ce0-ea5b-4e5e-8cee-0a49aa4a6307",
-                "nodes": [
-                    {
-                        "adapter_number": 0,
-                        "label": {
-                            "rotation": 0,
-                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
-                            "text": "e0/1",
-                            "x": 72,
-                            "y": 20
-                        },
-                        "node_id": "62edb7c9-d920-45a4-a39a-5e4f8f6769c1",
-                        "port_number": 1
-                    },
                     {
                         "adapter_number": 0,
                         "label": {
@@ -135,10 +92,53 @@
                             "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
                             "text": "e0",
                             "x": -7,
-                            "y": 30
+                            "y": 29
                         },
                         "node_id": "fecd8de9-97e9-4dae-aa0a-2082b045e211",
                         "port_number": 0
+                    },
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "e0/1",
+                            "x": 72,
+                            "y": 31
+                        },
+                        "node_id": "62edb7c9-d920-45a4-a39a-5e4f8f6769c1",
+                        "port_number": 1
+                    }
+                ],
+                "suspend": false
+            },
+            {
+                "filters": {},
+                "link_id": "9d9b1a97-247f-4722-8e31-cc8e33bfb1a3",
+                "nodes": [
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "nat0",
+                            "x": 96,
+                            "y": 75
+                        },
+                        "node_id": "eb41e085-fbb3-4889-9e8a-b17aab05e2f4",
+                        "port_number": 0
+                    },
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "e0/2",
+                            "x": 44,
+                            "y": -31
+                        },
+                        "node_id": "62edb7c9-d920-45a4-a39a-5e4f8f6769c1",
+                        "port_number": 2
                     }
                 ],
                 "suspend": false

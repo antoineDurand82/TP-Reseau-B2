@@ -230,34 +230,28 @@ Commandes à utiliser (ou pas) : `vim`, `cat`, `nmcli`, `systemctl`, `firewall-c
 
 # III. Routage simple
 
-Dans cette partie, vous allez remettre en place un routage statique simple. Vous êtes libres du choix de la techno (CentOS8, Cisco, autres. Vous pouvez utiliser GNS3). 
-
-Vous devez reproduire la mini-archi suivante : 
-```
-                   +-------+
-                   |Outside|
-                   | world |
-                   +---+---+
-                       |
-                       |
-+-------+         +----+---+         +-------+
-|       |   net1  |        |   net2  |       |
-|  VM1  +---------+ Router +---------+  VM2  |
-|       |         |        |         |       |
-+-------+         +--------+         +-------+
-```
-
-* **Description**
-  * Le routeur a trois interfaces, dont une qui permet de joindre l'extérieur (internet)
-  * La `VM1` a une interface dans le réseau `net1`
-  * La `VM2` a une interface dans le réseau `net2`
-  * Les deux VMs peuvent joindre Internet en passant par le `Router`
+Mon gns.
+![gns](GNS.PNG)
 * 🌞 **To Do** 
   * Tableau récapitulatif des IPs
-  * Configuration (bref) de VM1 et VM2
-  * Configuration routeur
-  * Preuve que VM1 passe par le routeur pour joindre internet
-  * Une (ou deux ? ;) ) capture(s) réseau ainsi que des explications qui mettent en évidence le routage effectué par le routeur
+    *Machines | `10.1.0.0/24` | `10.2.0.0/24` | `192.168.122.0/24`
+    --- | --- | --- | ---
+    `R1` | `10.1.0.254` | `10.2.0.254` | `192.168.122.141` 
+    `VM1-1` | `10.1.0.10` | - | -
+    `VM2-1` | - | `10.2.0.11` | -
+    <br> <br> <br>
+  * ![configuration vm 2](conf_vm2.PNG)
+    Comme tu peux le voir en surligner jaune, j'ai redéfini l'adresse ip de ma vm, j'ai renomé ma vm, je lui ai ajouté une route jusqu'à l'autre réseaux via ma gateway présent sur mon router (que tu vas voir à la suite) et enfin tu vois aussi que j'ai créé un host pour ping ma vm1
+
+    Je vais t'épargner le spam en te montrant la config de la vm1 où il n'y a que les ips qui changent. <br> <br> <br>
+
+    
+  * La configuration de mon router
+    ![Configuration router](Conf_router.PNG)
+    En te basant sur ma captur GNS et en la recoupant avec le tableau et la capture ci dessous tu peux voir que j'ai fais en sorte que mon router soit la gateway des 2 réseaux (normal) et qu'il soit connecté à la nat.
+  * ![Ping google](Ping_google.PNG)
+    J'ai du installer traceroute à la main (`yum install traceroute`)
+    Sur le traceroute tu peux voir que mon traceroute passe par la gateway du réseaux, passe par mon router et enfin l'adresse ip de ma box et puis il se perd avec des * * * (je sais pas pouruoi). Donc j'ai rajouté un `ping 8.8.8.8` pour te prouver que ma vm a quand même accés à google.
 
 # IV. Autres applications et métrologie
 
