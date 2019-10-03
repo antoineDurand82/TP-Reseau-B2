@@ -3,7 +3,6 @@
 # Sommaire
 
 * [Intro](#intro)
-* [0. Etapes préliminaires](#0-etapes-préliminaires)
 * [I. Gather informations](#i-gather-informations)
 * [II. Edit configurtion](#ii-edit-configuration)
   * [1. Configuration cartes réseau](#1-configuration-cartes-réseau)
@@ -16,35 +15,6 @@
 
 # Intro
 
-First TP smooth, remise dans le bain tranquillement (pour ceux qui l'ont quitté). Pour ce premier TP, on va rester du côté du réseau client et de l'administration simplifiée de services utilisant le réseau.
-
-Au menu :  
-* installation/configuration d'une VM CentOS8 (si c'est pas déjà fait :angry:)
-* exploration de la pile TCP/IP d'une machine Linux
-* configuration de services réseau
-* configuration firewall
-* analyse de trames
-* métrologie
-
-Notions abordées : 
-* IP
-* ARP
-* Ethernet
-* Ports (TCP/UDP)
-* Firewalling (filtrage de paquets)
-* DNS
-* DHCP
-* SSH
-* Service réseau
-
-**Référez-vous [au README des TPs](../README.md) pour des infos sur le déroulement et le rendu des TPs.**
-
-# 0. Etapes préliminaires
-
-* assurez-vous d'avoir au moins une carte réseau qui permet de joindre Internet
-* assurez-vous d'avoir au moins une AUTRE carte réseau dans un réseau UNIQUEMENT privé que vous pouvez joindre localement
-* effectuez une connexion SSH à la machine
-* assurez-vous d'avoir les droits `sudo`
 
 # I. Gather informations
 
@@ -288,5 +258,5 @@ Mon gns.
 Netdata est un outil utilisé pour récolter des métriques et envoyer des alertes. Il peut aussi être utilisé afin de visionner ces métriques, à court terme. Nous allons ici l'utiliser pour observer les métriques réseau et mettre en place un service web supplémentaire.
 
 * ![Trop styleeee](trop_styleeeee.PNG)
-C'est vraiment trop stylé, j'ai vraiment prid mon pied entre tant de facilité d'utilisation avec cockpit et tant de graphique avec netdata, c'est tellement beau et pratique !!!!
+C'est vraiment trop stylé, j'ai vraiment pris mon pied entre tant de facilité d'utilisation avec cockpit et tant de graphique avec netdata, c'est tellement beau et pratique !!!!
 Encore une fois, pour les randoms de passage, le lien de l'installation: `https://computingforgeeks.com/how-to-install-netdata-on-rhel-8-centos-8/`
