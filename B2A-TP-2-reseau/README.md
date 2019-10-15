@@ -80,24 +80,41 @@ Machine | `net1`
 | PC1 +--------+  SW1  +--------+  SW3  +--------+ PC3 |
 +-----+        +-------+        +-------+        +-----+
 ```
-
+![salut2](more_switch.PNG)
 #### Plan d'adressage
 
 Machine | `net1`
 --- | ---
-`PC1` | `10.2.2.1/24`
-`PC2` | `10.2.2.2/24`
-`PC3` | `10.2.2.3/24`
+`PC3` | `10.2.2.1/24`
+`PC4` | `10.2.2.2/24`
+`PC5` | `10.2.2.3/24`
 
 #### ToDo
+* ```Bash
+  PC-3> ping 10.2.2.2
+  84 bytes from 10.2.2.2 icmp_seq=1 ttl=64 time=2.385 ms
+  ```
+  ```Bash
+  PC-4> ping 10.2.2.1
+  84 bytes from 10.2.2.1 icmp_seq=1 ttl=64 time=0.496 ms
+  ```
+  ```Bash
+  PC-5> ping 10.2.2.3
+  84 bytes from 10.2.2.3 icmp_seq=1 ttl=64 time=0.265 ms
+  ```
 
-* 🌞 mettre en place la topologie ci-dessus
-* 🌞 faire communiquer les trois PCs
-  * avec des `ping` qui fonctionnent
 * 🌞 analyser la table MAC d'un switch
-  * `show mac address-table`
-  * comprendre/expliquer chaque ligne
-* 🐙 en lançant Wireshark sur les liens des switches, il y a des trames CDP qui circulent. Quoi qu'est-ce ?
+  * ```
+    Vlan    Mac Address       Type        Ports
+    ----    -----------       --------    -----
+      1    0050.7966.6802    DYNAMIC     Et0/0
+      1    0050.7966.6803    DYNAMIC     Et0/2
+      1    0050.7966.6804    DYNAMIC     Et0/2
+      1    aabb.cc00.0220    DYNAMIC     Et0/2
+      1    aabb.cc00.0330    DYNAMIC     Et0/2
+      1    aabb.cc00.0410    DYNAMIC     Et0/2
+    ```
+    Les 3 premières lignes sont les adresses mac des PC3, PC4 et PC5, les 3 autres sont les addresses mac de chacun des switch en sachant que toutes les informations sont passées par le port 0/2 du switch 3, sauf la première qui vient du PC-3
 
 #### Mise en évidence du Spanning Tree Protocol
 
@@ -113,44 +130,126 @@ Si on considère les trois liens qui unissent les switches :
 
 On va regarder comment STP a été configuré.
 
-* 🌞 déterminer les informations STP
-  * à l'aide des [commandes dédiées au protocole](/memo/cli-cisco.md#stp)
-* 🌞 faire un schéma en représentant les informations STP
-  * rôle des switches (qui est le root bridge)
-  * rôle de chacun des ports
+* SW4
+  ```
+  VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     aabb.cc00.0200
+             Cost        100
+             Port        3 (Ethernet0/2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     aabb.cc00.0400
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+  Interface           Role Sts Cost      Prio.Nbr Type
+  ------------------- ---- --- --------- -------- --------------------------------
+  Et0/0               Desg FWD 100       128.1    Shr
+  Et0/1               Altn BLK 100       128.2    Shr
+  Et0/2               Root FWD 100       128.3    Shr
+  Et0/3               Desg FWD 100       128.4    Shr
+  Et1/0               Desg FWD 100       128.5    Shr
+  Et1/1               Desg FWD 100       128.6    Shr
+  Et1/2               Desg FWD 100       128.7    Shr
+  Et1/3               Desg FWD 100       128.8    Shr
+  Et2/0               Desg FWD 100       128.9    Shr
+  Et2/1               Desg FWD 100       128.10   Shr
+  Et2/2               Desg FWD 100       128.11   Shr
+  Et2/3               Desg FWD 100       128.12   Shr
+  Et3/0               Desg FWD 100       128.13   Shr
+  Et3/1               Desg FWD 100       128.14   Shr
+  Et3/2               Desg FWD 100       128.15   Shr
+  Et3/3               Desg FWD 100       128.16   Shr
+  ```
+  <br><br>
+  SW3
+  ```
+  VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     aabb.cc00.0200
+             Cost        100
+             Port        4 (Ethernet0/3)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     aabb.cc00.0300
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+  Interface           Role Sts Cost      Prio.Nbr Type
+  ------------------- ---- --- --------- -------- --------------------------------
+  Et0/0               Desg FWD 100       128.1    Shr
+  Et0/1               Desg FWD 100       128.2    Shr
+  Et0/2               Desg FWD 100       128.3    Shr
+  Et0/3               Root FWD 100       128.4    Shr
+  Et1/0               Desg FWD 100       128.5    Shr
+  Et1/1               Desg FWD 100       128.6    Shr
+  Et1/2               Desg FWD 100       128.7    Shr
+  Et1/3               Desg FWD 100       128.8    Shr
+  Et2/0               Desg FWD 100       128.9    Shr
+  Et2/1               Desg FWD 100       128.10   Shr
+  Et2/2               Desg FWD 100       128.11   Shr
+  Et2/3               Desg FWD 100       128.12   Shr
+  Et3/0               Desg FWD 100       128.13   Shr
+  Et3/1               Desg FWD 100       128.14   Shr
+  Et3/2               Desg FWD 100       128.15   Shr
+  Et3/3               Desg FWD 100       128.16   Shr
+  ```
+  <br><br>
+  SW2
+  ```
+  VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     aabb.cc00.0200
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     aabb.cc00.0200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+  Interface           Role Sts Cost      Prio.Nbr Type
+  ------------------- ---- --- --------- -------- --------------------------------
+  Et0/0               Desg FWD 100       128.1    Shr
+  Et0/1               Desg FWD 100       128.2    Shr
+  Et0/2               Desg FWD 100       128.3    Shr
+  Et0/3               Desg FWD 100       128.4    Shr
+  Et1/0               Desg FWD 100       128.5    Shr
+  Et1/1               Desg FWD 100       128.6    Shr
+  Et1/2               Desg FWD 100       128.7    Shr
+  Et1/3               Desg FWD 100       128.8    Shr
+  Et2/0               Desg FWD 100       128.9    Shr
+  Et2/1               Desg FWD 100       128.10   Shr
+  Et2/2               Desg FWD 100       128.11   Shr
+  Et2/3               Desg FWD 100       128.12   Shr
+  Et3/0               Desg FWD 100       128.13   Shr
+  Et3/1               Desg FWD 100       128.14   Shr
+  Et3/2               Desg FWD 100       128.15   Shr
+  Et3/3               Desg FWD 100       128.16   Shr
+  ```
+* ![salut2](shema_root.PNG)
 * 🌞 confirmer les informations STP
-  * effectuer un `ping` d'une machine à une autre
-  * vérifier que les trames passent bien par le chemin attendu (Wireshark)
-* 🌞 ainsi, déterminer quel lien a été désactivé par STP
-* 🌞 faire un schéma qui explique le trajet d'une requête ARP lorsque PC1 ping PC3, et de sa réponse
-  * représenter **TOUTES** les trames ARP (n'oubliez pas les broadcasts)
+  * Ici on peut voir que le ping passe de Iou4 vers Iou2
+    ![salut2](iou4-iou2.PNG)
+    Et ici que le ping continue sa route vers le Iou3 en étant donc passé par Iou2
+    ![salut2](iou2-iou3.PNG)
+* Ce qui donne donc:
+  ![salut2](routeping.PNG)
 
 #### Reconfigurer STP
 
-* 🌞 changer la priorité d'un switch qui n'est pas le *root bridge*
+* 🌞 changer la priorité d'un switch qui n'est pas le *root bridge* <br>
+  Ici on voit que je viens de passer mon Iou3 en bridge
+  ![salut2](changebridge.PNG)
 * 🌞 vérifier les changements
-  * avec des commandes sur les switches
-  * 🐙 capturer les échanges qui suivent une reconfiguration STP avec Wireshark
-
-#### 🐙 STP & Perfs
-
-Si vous avez lancé Wireshark sur un lien entre un PC et un Switch, vous avez vu qu'il y a toujours des trames STP qui circulent...
-* un peu con non ? C'est un PC, il enverra jamais de trames STP
-* aussi avec STP, quand on branche un PC, le lien mettra plusieurs secondes avant de passer en *forwarding* et ainsi transmettre de la donnée
-* l'idéal ça serait de désactiver l'envoi de trames STP sur l'interface du switch (ça évite de cramer de la bande passante et du calcul CPU pour rien, générer du trafic inutile, etc.)
-* sauuuuf que si un p'tit malin branche des switches là-dessus, il pourrait tout péter en créant une boucle
-* deux fonctionnalités à mettre en place : 
-  * `portfast` : marque un port comme *"edge"* dans la topologie STP. Un port *edge* est considéré comme une extrémité de la topologie (= un client branché dessus, port *access*). *Port**fast*** parce que ça va permettre au port de s'allumer plus rapidement (sans passer par les états *listening* et *learning* pendant 15 secondes chacun par défaut) et d'être disponible instantanément
-    * on peut voir l'état d'un port (forward, listening, learning, blocking avec `show spanning-tree vlan 1`)
-  * `bpduguard` : permet de shutdown le port s'il reçoit des *BPDU* (pour rappel : un *BPDU* c'est un message STP)  
-  
-Idem pour les trames CDP !
-
-🐙 ToDo :
-  * [activer ces fonctionnalités (*portfast* et *bpduguard*) et activer le filtre BPDU](/memo/cli-cisco.md#stp) sur les interfaces où c'est nécessaire (marqué comme *edge* dans la topologie STP)
-  * aussi [désactiver l'envoi de trames CDP](/memo/cli-cisco.md#cdp) sur ces ports
-    * prouver avec Wireshark que le switch n'envoie plus de BPDU ni de trames CDP
-    * faites une capture avant et une capture après les manips pour le prouver :)
+  * Ici on voit que c'est maintenant le et0/2 de Iou4 qui est parti en vacance en tant qu'alternate, donc plus personne ne prendra la route qui se situe entre Iou4 et Iou2
+    ![salut2](changealternate.PNG)
 
 # III. Isolation
 
@@ -168,6 +267,8 @@ Idem pour les trames CDP !
                 +-----+
 ```
 
+![salut2](isolation_simple.PNG)
+
 #### Plan d'adressage
 
 Machine | IP `net1` | VLAN
@@ -178,11 +279,33 @@ Machine | IP `net1` | VLAN
 
 #### ToDo
 
-* 🌞 mettre en place la topologie ci-dessus
-  * voir [les commandes dédiées à la manipulation de VLANs](/memo/cli-cisco.md#vlan)
-* 🌞 faire communiquer les PCs deux à deux
-  * vérifier que `PC2` ne peut joindre que `PC3`
-  * vérifier que `PC1` ne peut joindre personne alors qu'il est dans le même réseau (sad)
+* Le PC-6 qui ne peut donc joindre personne
+  ```
+  PC-6> ping 10.2.3.2
+  host (10.2.3.2) not reachable
+
+  PC-6> ping 10.2.3.3
+  host (10.2.3.3) not reachable
+  ```
+* Le PC-7 peut joindre PC-8 mais pas PC-6
+  ```
+  PC-7> ping 10.2.3.1
+  host (10.2.3.1) not reachable
+
+  PC-7> ping 10.2.3.3
+  84 bytes from 10.2.3.3 icmp_seq=1 ttl=64 time=0.121 ms
+  84 bytes from 10.2.3.3 icmp_seq=2 ttl=64 time=0.217 ms
+  ```
+* Le PC-8 peut joindre PC-7 mais pas PC-6
+  ```
+  PC-8> ping 10.2.3.1
+  host (10.2.3.1) not reachable
+
+  PC-8> ping 10.2.3.2
+  84 bytes from 10.2.3.2 icmp_seq=1 ttl=64 time=0.520 ms
+  84 bytes from 10.2.3.2 icmp_seq=2 ttl=64 time=0.212 ms
+  ```
+
 
 ## 2. Avec trunk
 
@@ -198,7 +321,7 @@ Machine | IP `net1` | VLAN
                 | PC2 |          | PC3 |
                 +-----+          +-----+
 ```
-
+![salut2](isolation_trunk.PNG)
 #### Plan d'adressage
 
 Machine | IP `net1` | IP `net2` | VLAN
@@ -213,8 +336,37 @@ Machine | IP `net1` | IP `net2` | VLAN
 * 🌞 mettre en place la topologie ci-dessus
 * 🌞 faire communiquer les PCs deux à deux
   * vérifier que `PC1` ne peut joindre que `PC3`
+    ```
+    PC-6> ping 10.2.20.1
+    No gateway found
+
+    PC-6> ping 10.2.10.2
+    84 bytes from 10.2.10.2 icmp_seq=1 ttl=64 time=0.218 ms
+    84 bytes from 10.2.10.2 icmp_seq=2 ttl=64 time=0.305 ms
+
+    PC-6> ping 10.2.20.2
+    No gateway found
+    ```
   * vérifier que `PC4` ne peut joindre que `PC2`
+    ```
+    PC-9> ping 10.2.20.1
+    84 bytes from 10.2.20.1 icmp_seq=1 ttl=64 time=0.230 ms
+    84 bytes from 10.2.20.1 icmp_seq=2 ttl=64 time=0.321 ms
+
+    PC-9> ping 10.2.10.2
+    No gateway found
+
+    PC-9> ping 10.2.10.1
+    No gateway found
+    ```
+
 * 🌞 mettre en évidence l'utilisation des VLANs avec Wireshark
+  * Ici en vert on voit que la capture est entre le swith 1 et 2 et que le ping passe.<br>
+    Il s'agit evidemment du ping entre mon PC-9 et PC-7
+    En bleu on voit aussi que l'id du vlan demandé est belle et bien le 20.
+    ![salut2](ping_switch.PNG)
+  * Tandis que les autres vlan sont aveugle comme on peut le voir sur cette capture entre switch 2 et le PC-8
+    ![salut2](blind_man.PNG)
 
 # IV. Need perfs
 
@@ -233,6 +385,8 @@ Pareil qu'en [III.2.](#2-avec-trunk) à part le lien entre SW1 et SW2 qui est do
                 +-----+          +-----+
 
 ```
+
+![salut2](need_perf.PNG)
 #### Plan d'adressage
 
 Pareil qu'en [III.2.](#2-avec-trunk).
@@ -247,8 +401,13 @@ Machine | IP `net1` | IP `net2` | VLAN
 #### ToDo
 
 * 🌞 mettre en place la topologie ci-dessus
-  * configurer LACP entre `SW1` et `SW2`
-  * utiliser Wireshark pour mettre en évidence l'utilisation de trames LACP
-  * **vérifier avec un `show ip interface po1` que la bande passante a bien été doublée**
-
-> Pas de failover possible sur les IOUs malheureusement :( (voir [ce doc](https://www.cisco.com/c/en/us/td/docs/switches/blades/3020/software/release/12-2_58_se/configuration/guide/3020_scg/swethchl.pdf), dernière section. Pas de link state dans les IOUs)
+  * Tu vois mes deux captures wireshark des 2 cables physique présent entre Iou5 et Iou6 avec tout deux des trams lacp
+    ![salut2](double_wireshark.PNG)
+  * Lors de mon `show ip interface po1` je me retrouve avec ceci<br>
+    ```
+    IOU6#show ip int po1
+    Port-channel1 is up, line protocol is up
+      Inbound  access list is not set
+      Outgoing access list is not set 
+    ```
+    Donc je pense que je n'ai pas bien config mon lacp :(
