@@ -35,7 +35,7 @@
 | PC1 +--------+  SW1  +--------+ PC2 |
 +-----+        +-------+        +-----+
 ```
-![salut](simplest_setup.PNG)
+![salut](simplest_setup.png)
 
 #### Plan d'adressage
 
@@ -46,13 +46,13 @@ Machine | `net1`
 
 #### ToDo
 * Premier ping de la vm1 à la 2
-  * ![ping pc1 vers pc 2](pc1verspc2.PNG)
+  * ![ping pc1 vers pc 2](pc1verspc2.png)
     ligne 71 à 73 demande ARP pour connaitre à qui appartient l'ip demandé lors du ping 
     ligne 74 à 85 protocole ICMP ping l'adresse ip demandé.
 <br><br><br>
 
 * Premier ping de la vm2 à la 1
-  * ![ping pc2 vers pc 1](pc2verspc1.PNG)
+  * ![ping pc2 vers pc 1](pc2verspc1.png)
     ligne 15 à 17 demande ARP pour connaitre à qui appartient l'ip demandé lors du ping 
     ligne 18 à 30 protocole ICMP ping l'adresse ip demandé.
 * 🌞 expliquer...
@@ -80,7 +80,7 @@ Machine | `net1`
 | PC1 +--------+  SW1  +--------+  SW3  +--------+ PC3 |
 +-----+        +-------+        +-------+        +-----+
 ```
-![salut2](more_switch.PNG)
+![salut2](more_switch.png)
 #### Plan d'adressage
 
 Machine | `net1`
@@ -233,23 +233,23 @@ On va regarder comment STP a été configuré.
   Et3/2               Desg FWD 100       128.15   Shr
   Et3/3               Desg FWD 100       128.16   Shr
   ```
-* ![salut3](shema_root.PNG)
+* ![salut3](shema_root.png)
 * 🌞 confirmer les informations STP
   * Ici on peut voir que le ping passe de Iou4 vers Iou2
-![salut4](iou4-iou2.PNG)
+![salut4](iou4-iou2.png)
     Et ici que le ping continue sa route vers le Iou3 en étant donc passé par Iou2
-![salut5](iou2-iou3.PNG)
+![salut5](iou2-iou3.png)
 * Ce qui donne donc:
-![salut6](routeping.PNG)
+![salut6](routeping.png)
 
 #### Reconfigurer STP
 
 * 🌞 changer la priorité d'un switch qui n'est pas le *root bridge* <br>
   Ici on voit que je viens de passer mon Iou3 en bridge
-  ![salut7](changebridge.PNG)
+  ![salut7](changebridge.png)
 * 🌞 vérifier les changements
   * Ici on voit que c'est maintenant le et0/2 de Iou4 qui est parti en vacance en tant qu'alternate, donc plus personne ne prendra la route qui se situe entre Iou4 et Iou2
-    ![salut8](changealternate.PNG)
+    ![salut8](changealternate.png)
 
 # III. Isolation
 
@@ -267,7 +267,7 @@ On va regarder comment STP a été configuré.
                 +-----+
 ```
 
-![salut9](isolation_simple.PNG)
+![salut9](isolation_simple.png)
 
 #### Plan d'adressage
 
@@ -321,7 +321,7 @@ Machine | IP `net1` | VLAN
                 | PC2 |          | PC3 |
                 +-----+          +-----+
 ```
-![salut10](isolation_trunk.PNG)
+![salut10](isolation_trunk.png)
 #### Plan d'adressage
 
 Machine | IP `net1` | IP `net2` | VLAN
@@ -364,15 +364,15 @@ Machine | IP `net1` | IP `net2` | VLAN
   * Ici en vert on voit que la capture est entre le swith 1 et 2 et que le ping passe.<br>
     Il s'agit evidemment du ping entre mon PC-9 et PC-7
     En bleu on voit aussi que l'id du vlan demandé est belle et bien le 20.
-    ![salut11](ping_switch.PNG)
+    ![salut11](ping_switch.png)
   * Tandis que les autres vlan sont aveugle comme on peut le voir sur cette capture entre switch 2 et le PC-8
-    ![salut12](blind_man.PNG)
+    ![salut12](blind_man.png)
 
 # IV. Need perfs
 
 #### Topologie
 
-Pareil qu'en [III.2.](#2-avec-trunk) à part le lien entre SW1 et SW2 qui est doublé.
+Pareil qu'en III.2. à part le lien entre SW1 et SW2 qui est doublé.
 
 ```
 +-----+        +-------+--------+-------+        +-----+
@@ -386,10 +386,10 @@ Pareil qu'en [III.2.](#2-avec-trunk) à part le lien entre SW1 et SW2 qui est do
 
 ```
 
-![salut13](need_perf.PNG)
+![salut13](need_perf.png)
 #### Plan d'adressage
 
-Pareil qu'en [III.2.](#2-avec-trunk).
+Pareil qu'en III.2.
 
 Machine | IP `net1` | IP `net2` | VLAN
 --- | --- | --- | ---
@@ -402,7 +402,7 @@ Machine | IP `net1` | IP `net2` | VLAN
 
 * 🌞 mettre en place la topologie ci-dessus
   * Tu vois mes deux captures wireshark des 2 cables physique présent entre Iou5 et Iou6 avec tout deux des trams lacp
-    ![salut14](double_wireshark.PNG)
+    ![salut14](double_wireshark.png)
   * Lors de mon `show ip interface po1` je me retrouve avec ceci<br>
     ```
     IOU6#show ip int po1
