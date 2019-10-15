@@ -233,23 +233,23 @@ On va regarder comment STP a été configuré.
   Et3/2               Desg FWD 100       128.15   Shr
   Et3/3               Desg FWD 100       128.16   Shr
   ```
-* ![salut2](shema_root.PNG)
+* ![salut3](shema_root.PNG)
 * 🌞 confirmer les informations STP
   * Ici on peut voir que le ping passe de Iou4 vers Iou2
-    ![salut2](iou4-iou2.PNG)
+![salut4](iou4-iou2.PNG)
     Et ici que le ping continue sa route vers le Iou3 en étant donc passé par Iou2
-    ![salut2](iou2-iou3.PNG)
+![salut5](iou2-iou3.PNG)
 * Ce qui donne donc:
-  ![salut2](routeping.PNG)
+![salut6](routeping.PNG)
 
 #### Reconfigurer STP
 
 * 🌞 changer la priorité d'un switch qui n'est pas le *root bridge* <br>
   Ici on voit que je viens de passer mon Iou3 en bridge
-  ![salut2](changebridge.PNG)
+  ![salut7](changebridge.PNG)
 * 🌞 vérifier les changements
   * Ici on voit que c'est maintenant le et0/2 de Iou4 qui est parti en vacance en tant qu'alternate, donc plus personne ne prendra la route qui se situe entre Iou4 et Iou2
-    ![salut2](changealternate.PNG)
+    ![salut8](changealternate.PNG)
 
 # III. Isolation
 
@@ -267,7 +267,7 @@ On va regarder comment STP a été configuré.
                 +-----+
 ```
 
-![salut2](isolation_simple.PNG)
+![salut9](isolation_simple.PNG)
 
 #### Plan d'adressage
 
@@ -321,7 +321,7 @@ Machine | IP `net1` | VLAN
                 | PC2 |          | PC3 |
                 +-----+          +-----+
 ```
-![salut2](isolation_trunk.PNG)
+![salut10](isolation_trunk.PNG)
 #### Plan d'adressage
 
 Machine | IP `net1` | IP `net2` | VLAN
@@ -364,9 +364,9 @@ Machine | IP `net1` | IP `net2` | VLAN
   * Ici en vert on voit que la capture est entre le swith 1 et 2 et que le ping passe.<br>
     Il s'agit evidemment du ping entre mon PC-9 et PC-7
     En bleu on voit aussi que l'id du vlan demandé est belle et bien le 20.
-    ![salut2](ping_switch.PNG)
+    ![salut11](ping_switch.PNG)
   * Tandis que les autres vlan sont aveugle comme on peut le voir sur cette capture entre switch 2 et le PC-8
-    ![salut2](blind_man.PNG)
+    ![salut12](blind_man.PNG)
 
 # IV. Need perfs
 
@@ -386,7 +386,7 @@ Pareil qu'en [III.2.](#2-avec-trunk) à part le lien entre SW1 et SW2 qui est do
 
 ```
 
-![salut2](need_perf.PNG)
+![salut13](need_perf.PNG)
 #### Plan d'adressage
 
 Pareil qu'en [III.2.](#2-avec-trunk).
@@ -402,7 +402,7 @@ Machine | IP `net1` | IP `net2` | VLAN
 
 * 🌞 mettre en place la topologie ci-dessus
   * Tu vois mes deux captures wireshark des 2 cables physique présent entre Iou5 et Iou6 avec tout deux des trams lacp
-    ![salut2](double_wireshark.PNG)
+    ![salut14](double_wireshark.PNG)
   * Lors de mon `show ip interface po1` je me retrouve avec ceci<br>
     ```
     IOU6#show ip int po1
