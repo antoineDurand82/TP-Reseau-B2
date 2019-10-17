@@ -2,55 +2,11 @@
 
 # Sommaire
 
-* [Intro](#intro)
-* [0. Etapes préliminaires](#0-etapes-préliminaires)
 * [I. *Router-on-a-stick*](#i-router-on-a-stick)
 * [II. Cas concret](#ii-cas-concret)
 
-# Intro
-
-On va aborder un cas un peu plus concret dans ce TP. Vous aurez besoin d'un peu de votre créativité pour arriver jusqu'au bout.  
-
-Vous aller avoir besoin d'un routeur dans ce TP et de quelques petits détails de conf qu'on a pas encore vu.  
-
-Afin de vous refaire pratiquer un peu, et de vous faire aborder ces quelques nouvelles notions, **le TP se découpe en deux temps** :
-* **appréhension d'une topologie classique : *Router-on-a-stick***
-  * on remet un peu du routeur là dedans, et on aborde le routage inter-VLAN
-  * partie courte, c'est une intro à la seconde partie
-* **cas concret**
-  * je vous soumets un problème, vous me répondez avec une infra :)
-
-Comme toujours...  
-**Allez à votre rythme, prenez le temps de comprendre.**  
-**Posez des questions.**  
-**Prenez des notes au fur et à mesure.**  
-**Lisez les parties en entier avant de commencer à travailler dessus.**
-
-> **Référez-vous [au README des TPs](/tp/README.md) pour des infos sur le déroulement et le rendu des TPs.**
-
-# 0. Etapes préliminaires
-
-* avoir lu [le README des TPs](/tp/README.md)
-* **Wireshark** installé
-* GNS3 fonctionnel (lecture du [mémo/setup GNS3](/memo/setup-gns3.md))
-* Lecture du [mémo CLI Cisco](/memo/cli-cisco.md)
-
-**Dans ce TP, vous pouvez considérez que :**
-* les `PC` sont [des VPCS de GNS3](/memo/setup-gns3.md#utilisation-dun-vpcs) (sauf indication contraire)
-* les `P` sont des imprimantes, on les simulera avec des VPCS aussi
-* les `SRV` sont ds serveurs, VPCS again
-* les `SW` sont des Switches Cisco, virtualisé avec [l'IOU L2](/memo/setup-gns3.md#get-and-setup-iou)
-* les `R` sont des routeurs, virtualisé avec l'iOS dispo ici : [Cisco 3640](https://drive.google.com/drive/folders/1DFe2u5tZldL_y_UYm32ZbmT0cIfgQM2p)
-
 # I. *Router-on-a-stick*
 
-C'est le cas d'école typique pour mettre en place du routage inter-VLAN.  
-
-L'idée est de pouvoir autoriser certains VLANs à se joindre, mais pas d'autres :
-* avec les VLANs on isole les gens au niveau 2 (Ethernet)
-* avec le routage inter-VLAN, on permet de passer outre les VLANs en faisant appel au niveau 3
-* **l'idée c'est qu'à aucun moment on change le fonctionnement des VLANs, on autorise juste un routeur à faire son taff : router entre deux réseaux**, qu'ils correspondent à des VLANs différents ou non
-* let's goooo
 
 Schéma moche ftw :
 
@@ -71,6 +27,8 @@ Schéma moche ftw :
              |PC2|      |PC3|
              +---+      +---+
 ```
+
+![infra 1](infra1.png)
 
 **Tableau des réseaux utilisés**
 
@@ -110,7 +68,13 @@ Réseaux | `net1` |  `net2` |  `net3` |  `netP`
   * se référer au [mémo Cisco section sous-interface](/memo/cli-cisco.md#sous-interface)
   * pour la partie "Qui peut joindre qui ?" vous n'avez besoin que de trunks avec des VLANs spécifiques autorisés
 * 🌞 Prove me that your setup is actually working
-  * think about VLANs, `ping`, etc.
+  * PC | `PC1` |  `PC2` |  `PC3` |  `PC4` | `Imprimante`
+  --- | --- | --- | --- | --- | ---
+  `PC1` | x | `PC-1> ping 10.3.20.2`<br> `host (10.3.10.254) not reachable`| `PC-1> ping 10.3.20.3`<br> `host (10.3.10.254) not reachable` | `PC-1> ping 10.3.30.4`<br> `host (10.3.10.254) not reachable` | `PC-1> ping 10.3.40.1`<br> `host (10.3.10.254) not reachable`
+  `PC2` | `PC-2> ping 10.3.10.1` <br> `10.3.10.1 icmp_seq=1 timeout` | x | `PC-2> ping 10.3.20.3` <br> `84 bytes from 10.3.20.3 icmp_seq=1 ttl=64 time=1.083 ms` | `PC-2> ping 10.3.30.4` <br> `84 bytes from 10.3.30.4 icmp_seq=1 ttl=63 time=10.940 ms` |`PC-2> ping 10.3.40.1` <br> `84 bytes from 10.3.40.1 icmp_seq=1 ttl=63 time=12.049 ms`
+  `PC3` | ❌ | ✅ | ✅ | ✅ |✅
+  `PC4` | ❌ | ✅ | ✅ | ✅ |✅
+  `Imprimante` | ❌ | ✅ | ✅ | ✅ |✅
 
 
 **CHECK MATE !**
