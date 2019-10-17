@@ -68,16 +68,83 @@ Réseaux | `net1` |  `net2` |  `net3` |  `netP`
   * se référer au [mémo Cisco section sous-interface](/memo/cli-cisco.md#sous-interface)
   * pour la partie "Qui peut joindre qui ?" vous n'avez besoin que de trunks avec des VLANs spécifiques autorisés
 * 🌞 Prove me that your setup is actually working
-  * PC | `PC1` |  `PC2` |  `PC3` |  `PC4` | `Imprimante`
-  --- | --- | --- | --- | --- | ---
-  `PC1` | x | `PC-1> ping 10.3.20.2`<br> `host (10.3.10.254) not reachable`| `PC-1> ping 10.3.20.3`<br> `host (10.3.10.254) not reachable` | `PC-1> ping 10.3.30.4`<br> `host (10.3.10.254) not reachable` | `PC-1> ping 10.3.40.1`<br> `host (10.3.10.254) not reachable`
-  `PC2` | `PC-2> ping 10.3.10.1` <br> `10.3.10.1 icmp_seq=1 timeout` | x | `PC-2> ping 10.3.20.3` <br> `84 bytes from 10.3.20.3 icmp_seq=1 ttl=64 time=1.083 ms` | `PC-2> ping 10.3.30.4` <br> `84 bytes from 10.3.30.4 icmp_seq=1 ttl=63 time=10.940 ms` | `PC-2> ping 10.3.40.1` <br> `84 bytes from 10.3.40.1 icmp_seq=1 ttl=63 time=12.049 ms`
-  `PC3` | ❌ | ✅ | ✅ | ✅ |✅
-  `PC4` | ❌ | ✅ | ✅ | ✅ |✅
-  `Imprimante` | ❌ | ✅ | ✅ | ✅ |✅
+  * PC1 
+    ```
+    PC-1> ping 10.3.20.2
+    host (10.3.10.254) not reachable
 
+    PC-1> ping 10.3.20.3
+    host (10.3.10.254) not reachable
 
-**CHECK MATE !**
+    PC-1> ping 10.3.30.4
+    host (10.3.10.254) not reachable
+
+    PC-1> ping 10.3.40.1
+    host (10.3.10.254) not reachable
+    ```
+
+    PC2
+    ```
+    PC-2> ping 10.3.10.1
+    10.3.10.1 icmp_seq=1 timeout
+
+    PC-2> ping 10.3.20.3
+    84 bytes from 10.3.20.3 icmp_seq=1 ttl=64 time=0.320 ms
+
+    PC-2> ping 10.3.30.4
+    10.3.30.4 icmp_seq=1 timeout
+
+    PC-2> ping 10.3.30.4
+    84 bytes from 10.3.30.4 icmp_seq=1 ttl=63 time=10.778 ms
+
+    PC-2> ping 10.3.40.1
+    84 bytes from 10.3.40.1 icmp_seq=3 ttl=63 time=17.253 ms
+    ```
+
+    PC3
+    ```
+    PC-3> ping 10.3.10.1
+    10.3.10.1 icmp_seq=1 timeout
+
+    PC-3> ping 10.3.20.2
+    84 bytes from 10.3.20.2 icmp_seq=1 ttl=64 time=0.844 ms
+
+    PC-3> ping 10.3.30.4
+    84 bytes from 10.3.30.4 icmp_seq=1 ttl=63 time=20.818 ms
+
+    PC-3> ping 10.3.40.1
+    84 bytes from 10.3.40.1 icmp_seq=1 ttl=63 time=19.827 ms
+    ```
+
+    PC4
+    ```
+    PC-4> ping 10.3.10.1
+    10.3.10.1 icmp_seq=1 timeout
+
+    PC-4> ping 10.3.20.2
+    84 bytes from 10.3.20.2 icmp_seq=1 ttl=63 time=15.342 ms
+
+    PC-4> ping 10.3.20.3
+    84 bytes from 10.3.20.3 icmp_seq=1 ttl=63 time=16.152 ms
+
+    PC-4> ping 10.3.40.1
+    84 bytes from 10.3.40.1 icmp_seq=3 ttl=63 time=19.946 ms
+    ```
+
+    Imprimante
+    ```
+    P1> ping 10.3.10.1
+    10.3.10.1 icmp_seq=1 timeout
+
+    P1> ping 10.3.20.2
+    84 bytes from 10.3.20.2 icmp_seq=1 ttl=63 time=11.848 ms
+
+    P1> ping 10.3.20.3
+    84 bytes from 10.3.20.3 icmp_seq=3 ttl=63 time=14.226 ms
+
+    P1> ping 10.3.30.4
+    84 bytes from 10.3.30.4 icmp_seq=1 ttl=63 time=13.214 ms
+    ```
 
 # II. Cas concret
 
