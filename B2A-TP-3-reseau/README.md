@@ -68,7 +68,7 @@ Réseaux | `net1` |  `net2` |  `net3` |  `netP`
   * se référer au [mémo Cisco section sous-interface](/memo/cli-cisco.md#sous-interface)
   * pour la partie "Qui peut joindre qui ?" vous n'avez besoin que de trunks avec des VLANs spécifiques autorisés
 * 🌞 Prove me that your setup is actually working
-  * PC | `PC1` |  `PC2` |  `PC3` |  `PC4` | `Imprimante`
+   PC | `PC1` |  `PC2` |  `PC3` |  `PC4` | `Imprimante`
   --- | --- | --- | --- | --- | ---
   `PC1` | x | `PC-1> ping 10.3.20.2`<br> `host (10.3.10.254) not reachable`| `PC-1> ping 10.3.20.3`<br> `host (10.3.10.254) not reachable` | `PC-1> ping 10.3.30.4`<br> `host (10.3.10.254) not reachable` | `PC-1> ping 10.3.40.1`<br> `host (10.3.10.254) not reachable`
   `PC2` | `PC-2> ping 10.3.10.1` <br> `10.3.10.1 icmp_seq=1 timeout` | x | `PC-2> ping 10.3.20.3` <br> `84 bytes from 10.3.20.3 icmp_seq=1 ttl=64 time=1.083 ms` | `PC-2> ping 10.3.30.4` <br> `84 bytes from 10.3.30.4 icmp_seq=1 ttl=63 time=10.940 ms` |`PC-2> ping 10.3.40.1` <br> `84 bytes from 10.3.40.1 icmp_seq=1 ttl=63 time=12.049 ms`
