@@ -92,3 +92,10 @@ Un câble *moyen* pour relier le switch du routeur au routeur
 
 
 Cela fait donc 36 câbles **moyens** et 5 câbles **longs**
+
+
+## Qui a accès à qui
+
+https://www.cisco.com/c/fr_ca/support/docs/security/ios-firewall/23602-confaccesslists.html
+
+http://saloperie.com/docs/mask

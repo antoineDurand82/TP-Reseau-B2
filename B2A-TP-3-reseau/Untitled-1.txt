@@ -1,0 +1,28 @@
+vlan ??
+name ??
+exit
+
+interface ethernet 3/0
+switchport mode access
+switchport access vlan 50
+exit
+copy running-config startup-config
+
+
+int e ?/?
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan ??,??
+exit
+copy running-config startup-config
+
+
+interface ethernet 0/0.??
+encapsulation dot1q ??
+ip address 192.168.??.254 255.255.255.224
+
+
+/24 255.255.255.0
+/27 255.255.255.224
+/28 255.255.255.240
+/29 255.255.255.248
