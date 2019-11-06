@@ -2705,5 +2705,5 @@
     "type": "topology",
     "variables": null,
     "version": "2.1.12",
-    "zoom": 128
+    "zoom": 64
 }

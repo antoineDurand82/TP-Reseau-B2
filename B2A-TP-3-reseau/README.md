@@ -148,34 +148,9 @@ Réseaux | `net1` |  `net2` |  `net3` |  `netP`
 
 # II. Cas concret
 
-> C'est cool si vous jouez un peu le jeu et que vous imaginez quelque chose d'original. *Vous pouvez (comme aux autres TPs) pomper sur les autres mais ça a encore moins d'intérêt que d'habitude n_n !*
+## Infra
 
-**Creusez-vous un peu la tête.**  
-
-Le but est de mettre en place une infra qui répond au besoin des bureaux représentés ci-dessous :
-
-![Yo](./pics/schema-II.png)
-
-* `R1` `R3` `R4` et `R5` sont des bureaux avec des utilisateurs
-* `R2` est une salle serveur 
-* le bâtiment a une taille de 20m x 20m (approximativement, vous en aurez besoin sur la fin)
-
-**C'est quoi ces machines ?**
-
-Type | Nom | Rôle | Dans GNS 
---- | --- | --- | ---
-`A` | Admins | Accès à tout à frer. Full power. | VPCS
-`U` | Users | Accès à un peu moins. | VPCS
-`S` | Stagiaires | Encore un peu moins. | VPCS
-`SRV` | Serveurs | Services hébergés en local. Ceux encadrés en rouge sont des **serveurs sensibles ou SS** | VPCS (ou autre si explicitement demandé)
-`P` | Imprimantes | Imprimantes dispo en réseau
-
----
-
-**Exceptions** *(ce sont des bonus, voir la fin du TP*)
-* tous les postes ne peuvent joindre que l'imprimante de leur propre salle
-* les serveurs sensibles n'ont pas accès à internet
-* seul l'admin 1 (`A1`) a accès au serveur 4 (`SRV4`)
+![Infra](./Infra2.png)
 
 **Qui a accès à qui exactement ?** (à mettre en place dans un second temps)  
 
@@ -195,35 +170,18 @@ Imprimantes | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
 
 **TODO**
 * setup this shit in GNS3
-  * matériel autorisé : routeurs (Cisco 3640), switches (IOU L2 Cisco), VPCS
-  * outils : routage statique, VLAN, votre talent
-* pour la partie soft
-  * 🌞 dimensionnez intelligemment les réseaux
-    * prévoyez une augmentation légère
   * 🌞 permettre un accès internet à tout le monde
-* pour la partie hard
-  * 🌞 proposez un nombre de routeur et de switches et précisez à quel endroit physique ils se trouveront
-  * 🌞 précisez le nombre de câbles nécessaires et une longueur (approximative)
-    * court : moins de 1m
-    * moyen : entre 1 et 5m
-    * long : 5m+
-    * **le but c'est d'avoir un ordre de grandeur**, on s'en fout complet des tailles exactes pour ce TP
-* 🌞 livrer, en plus de l'infra, des éléments qui rendent compte de l'infra (de façon simple)
-  * schéma réseau (screen GNS ?)
-  * référez-vous à la partie I. (tableau des réseaux utilisés, tableau d'adressage)
-* **être en mesure de prouver que l'infra fonctionne comme demandé**
 
-**Dans un second temps :**
-* 🌞 mettre en place "qui a accès à qui exactement ?"
 
-**Conseils**
-* **avant de vous lancer** réfléchissez aux différentes étapes qui vous permettront de réaliser le TP
-  * je vous conseille par exemple de faire un schéma et un plan d'adressage **en premier**
-* documentez ce que vous faites au fur et à mesure
-* n'oubliez pas de sauvegarder la configuration des équipements réseau et celle des VPCS
 
----
 
+
+
+
+**Exceptions** *(ce sont des bonus, voir la fin du TP*)
+* tous les postes ne peuvent joindre que l'imprimante de leur propre salle
+* les serveurs sensibles n'ont pas accès à internet
+* seul l'admin 1 (`A1`) a accès au serveur 4 (`SRV4`)
 **Bonus**
 * 🐙 mettre en place les exceptions
   * documentez-vous, proposez des choses
