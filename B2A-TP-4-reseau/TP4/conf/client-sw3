@@ -1,0 +1,17 @@
+hostname client-sw3
+!
+interface Ethernet0/0
+ switchport access vlan 10
+ switchport mode access
+!
+interface Ethernet0/1
+ switchport access vlan 20
+ switchport mode access
+!
+interface Ethernet0/2
+ switchport access vlan 20
+ switchport mode access
+!
+interface Ethernet1/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk

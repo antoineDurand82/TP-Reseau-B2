@@ -1,0 +1,27 @@
+hostname R1
+!
+ip name-server 8.8.8.8
+!
+interface Ethernet0/0
+ ip address dhcp
+ ip nat outside
+ ip virtual-reassembly
+ half-duplex
+!
+interface Ethernet0/1.30
+ encapsulation dot1Q 30
+ ip address 10.5.30.254 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
+!
+interface Ethernet0/2.10
+ encapsulation dot1Q 10
+ ip address 10.5.10.254 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
+!
+interface Ethernet0/2.20
+ encapsulation dot1Q 20
+ ip address 10.5.20.254 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly
